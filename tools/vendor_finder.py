@@ -1,5 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers.json import JsonOutputParser
 import json
 import os
 from dotenv import load_dotenv
@@ -48,56 +49,12 @@ def generate_plumber_vendors(city: str, count: int = 5) -> list:
     """
     
     prompt = PromptTemplate.from_template(template)
-    response = llm_with_tools.invoke(prompt.format(city=city, count=count))
+    chain = prompt | llm_with_tools | JsonOutputParser()
+    response = chain.invoke({'city':city, 'count':count})
+
+    print(response)
     
-    # Extract the response content
-    # When using tools like web_search, the response structure might be different
-    if hasattr(response, 'content'):
-        response_text = response.content
-    else:
-        # Handle different response structures that might come from tool use
-        print("Response format differs from expected. Attempting to extract content...")
-        if hasattr(response, 'message') and hasattr(response.message, 'content'):
-            response_text = response.message.content
-        elif isinstance(response, dict) and 'content' in response:
-            response_text = response['content']
-        elif isinstance(response, str):
-            response_text = response
-        else:
-            print(f"Unexpected response format: {type(response)}")
-            print(f"Response: {response}")
-            return []
-    
-    try:
-        # If response_text is already a list or dict, return it directly
-        if isinstance(response_text, (list, dict)):
-            return response_text
-        # Try to parse the response as JSON string
-        vendors = json.loads(response_text)
-        return vendors
-    except json.JSONDecodeError:
-        # Try to extract JSON array from the response text
-        import re
-        print(f"Error parsing JSON response, attempting to extract JSON array: {response_text}")
-        try:
-            # Find the first '[' and last ']' to extract the JSON array
-            start = response_text.find('[')
-            end = response_text.rfind(']')
-            if start != -1 and end != -1 and end > start:
-                json_str = response_text[start:end+1]
-                vendors = json.loads(json_str)
-                return vendors
-            else:
-                # Try to extract with regex as a fallback
-                match = re.search(r'\[.*\]', response_text, re.DOTALL)
-                if match:
-                    vendors = json.loads(match.group(0))
-                    return vendors
-        except Exception as e:
-            print(f"Failed to extract JSON array: {e}")
-        # If all parsing fails, return an empty list
-        print(f"Final failure parsing JSON response: {response_text}")
-        return []
+    return response
 
 def save_vendors_to_json(vendors: list, filename: str = "data/plumber_vendors.json") -> None:
     """Save vendor data to a JSON file"""
