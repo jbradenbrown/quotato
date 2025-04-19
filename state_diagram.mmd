@@ -1,0 +1,32 @@
+stateDiagram-v2
+    [*] --> VendorFinder
+    VendorFinder --> ContactQueue: Vendors Found
+    
+    ContactQueue --> ContactAgent: For Each Vendor
+    ContactQueue --> GenerateReport: All Agents Done
+    
+    state ContactAgent {
+        [*] --> SendOutreach
+        SendOutreach --> WaitingForReply
+        
+        WaitingForReply --> ProcessReply: Reply Received
+        WaitingForReply --> FollowUp: Timeout (Optional)
+        FollowUp --> WaitingForReply
+        
+        ProcessReply --> QuoteReceived: Has Quote
+        ProcessReply --> NeedsInfo: Missing Info
+        ProcessReply --> Declined: Vendor Declined
+        
+        NeedsInfo --> AgentResponds: Agent Knows Answer
+        NeedsInfo --> UserInput: Agent Needs Help
+        
+        AgentResponds --> SendFollowUp
+        UserInput --> SendFollowUp: User Provided Info
+        
+        SendFollowUp --> WaitingForReply
+        
+        QuoteReceived --> Complete: Success
+        Declined --> Complete: Failure
+    }
+    
+    GenerateReport --> [*]
