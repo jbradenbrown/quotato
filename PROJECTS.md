@@ -18,3 +18,9 @@
 - [ ] Web UI to track responses
 - [ ] Auto-summarize incoming quotes
 - [ ] Upload photos
+
+## Unstructured
+- [ ] Ability to mock email sends
+- [ ] Ability to mock form inputs
+- [ ] Build out the vendor finder, this seems big
+- [ ] Nice to have a front end
