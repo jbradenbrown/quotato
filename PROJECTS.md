@@ -9,7 +9,7 @@
 
 ## 🧪 Next (Nice to Have)
 - [ ] Parse email replies via IMAP
-- [ ] CLI tool with argparse
+- [ ] CLI tool with argparse, to store specific user data
 - [ ] Logging and retries
 - [ ] Browser automation (form submit)
 
@@ -17,3 +17,4 @@
 - [ ] LangChain agent to orchestrate quote collection
 - [ ] Web UI to track responses
 - [ ] Auto-summarize incoming quotes
+- [ ] Upload photos

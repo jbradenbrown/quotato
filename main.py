@@ -10,9 +10,9 @@ load_dotenv()
 
 SERVICE = "window replacement"
 CITY = "Seattle"
-DETAILS = "We have two cracked windows in a single-family home."
+DETAILS = "We have two cracked windows in a single-family home." # Replace with more complex details 
 USER_NAME = "Jeffrey Brown"
-USER_EMAIL = "jeff@example.com"
+USER_EMAIL = "jeff@example.com" # Replace with your email
 
 vendors = get_mock_vendors(SERVICE, CITY)
 responses = {}
