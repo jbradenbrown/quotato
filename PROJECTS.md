@@ -24,3 +24,5 @@
 - [ ] Ability to mock form inputs
 - [ ] Build out the vendor finder, this seems big
 - [ ] Nice to have a front end
+- [ ] Some way to handle responses, probably a service or something, or just update on a schedule
+- [ ] Build out the report into a chart or something
