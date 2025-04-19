@@ -1,14 +1,17 @@
 import os
 import textwrap
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
+from dotenv import load_dotenv
+
+load_dotenv()
 
 USE_MOCK_FORM = os.getenv("USE_MOCK_FORM", "true").lower() == "true"
 llm = ChatOpenAI()
 
 def generate_form_submission(service_type: str, city: str, details: str, user_name: str, user_email: str) -> str:
     if USE_MOCK_FORM:
-        return textwrap.dedent("""
+        return textwrap.dedent(f"""
             Name: {user_name}
             Email: {user_email}
             Service: {service_type}
@@ -16,7 +19,7 @@ def generate_form_submission(service_type: str, city: str, details: str, user_na
         """)
 
     else:
-      template = textwrap.dedent("""\
+      template = textwrap.dedent(f"""\
           You're filling out an online quote request form for a {service_type} service in {city}.
           Here's the customer info:
 
