@@ -32,9 +32,9 @@ for v in vendors:
             responses[v["name"]] = "Email sent (waiting for reply)"
         except Exception as e:
             responses[v["name"]] = f"Failed to send: {e}"
-    elif "form_url" in v:
+    elif "contact_form_url" in v:
         form_fill = generate_form_submission(SERVICE, CITY, DETAILS, USER_NAME, USER_EMAIL)
-        responses[v["name"]] = f"Form URL: {v['form_url']}\n\nSuggested Input:\n{form_fill}"
+        responses[v["name"]] = f"Form URL: {v['contact_form_url']}\n\nSuggested Input:\n{form_fill}"
     else:
         responses[v["name"]] = "No contact method available."
 
