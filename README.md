@@ -34,3 +34,12 @@ git clone https://github.com/yourname/quotato.git
 cd quotato
 pip install -r requirements.txt
 cp .env.example .env  # Fill in API keys and config
+
+```
+
+___
+
+## Issues Found
+
+- chat gpt is not able to easily navigate the website forms, they are often nested and have drop downs
+- 

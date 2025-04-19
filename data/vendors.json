@@ -1,14 +1,143 @@
 [
   {
-    "name": "Seattle Glass Pros",
-    "email": "glass@example.com"
+    "name": "Glass Doctor of Seattle",
+    "phone": "(206) 709‑5004",
+    "address": "18840 72nd Ave S, Kent, WA 98032",
+    "website": "https://glassdoctor.com/seattle",
+    "contact_form_url": "https://glassdoctor.com/seattle#schedule‑appointment",
+    "services": [
+      "Custom‑cut glass tabletops & shelving",
+      "In‑home measurement and installation",
+      "24/7 emergency service"
+    ],
+    "support_notes": "Franchise team; can combine home, business and auto glass on one ticket; lets you book directly online or by phone."
   },
   {
-    "name": "Urban Window Repair",
-    "form_url": "https://urbanglass.com/request"
-  }
+    "name": "Beacon Hill Glass",
+    "phone": "(206) 372‑4186",
+    "address": "231 SW 41st St, Renton, WA 98057",
+    "website": "https://www.beaconhillglass.com",
+    "contact_form_url": "https://www.beaconhillglass.com/quote-request",
+    "services": [
+      "Table‑top cutting (many tints/thicknesses)",
+      "New or replacement window glass",
+      "Emergency board‑ups"
+    ],
+    "support_notes": "Small owner‑run crew; accepts text messages; mobile‑friendly quote form with same‑day replies.",
+    "fields": [
+      {
+        "name": "first_name",
+        "label": "First Name",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "last_name",
+        "label": "Last Name",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": false
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "required": false
+      },
+      {
+        "name": "address",
+        "label": "Address",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "service",
+        "label": "Please Select Service Option",
+        "type": "select",
+        "required": true,
+        "options": [
+          "Single Pane Glass Repair",
+          "Double Pane Glass Replacement",
+          "New Window Installation",
+          "Window Issues / Repair",
+          "Other"
+        ]
+      },
+      {
+        "name": "details",
+        "label": "Please Enter Sizes or Description",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "name": "photo_1",
+        "label": "Upload Photo (Optional)",
+        "type": "file",
+        "required": false
+      },
+      {
+        "name": "photo_2",
+        "label": "Upload Photo (Optional)",
+        "type": "file",
+        "required": false
+      }
+    ]
+  },
   {
-    "name": "Glass Doctor",
-    "form_url": "https://glassdoctor.com/schedule-appointment?fid=473"
+    "name": "Perkins Glass & Mirror",
+    "phone": "(206) 322‑4949",
+    "address": "2737 1st Ave S, Seattle, WA 98134",
+    "website": "https://www.perkinsglassseattle.com",
+    "contact_form_url": "https://www.perkinsglassseattle.com/#contact",
+    "services": [
+      "Walk‑in glass cutting (‘Will‑Call’ same‑day pickup)",
+      "Mirrors & storefront glass",
+      "Family‑owned since 1906"
+    ],
+    "support_notes": "Fastest turnaround if you arrive with exact measurements; favors pickup over delivery."
+  },
+  {
+    "name": "Sunset Glass Co.",
+    "phone": "(425) 454‑5087",
+    "address": "14320 NE 21st St #1, Bellevue, WA 98007",
+    "website": "https://sunsetglass.com",
+    "contact_form_url": "https://sunsetglass.com/contact‑us",
+    "services": [
+      "Custom‑cut glass & mirrors",
+      "Cabinet door glass, pet doors, fireplace shields",
+      "Pickup for small pieces on Wednesdays only"
+    ],
+    "support_notes": "Best bet for Eastside customers; web form replies within one business day."
+  },
+  {
+    "name": "Pacific Glass Inc.",
+    "phone": "(425) 277‑1800",
+    "address": "221 Airport Way, Renton, WA 98057",
+    "website": "https://www.pacificglassinc.com",
+    "contact_form_url": "https://www.pacificglassinc.com/contact",
+    "services": [
+      "Templating, fabrication, delivery & install",
+      "Low‑iron, laminated & patterned glass options",
+      "Residential & commercial projects"
+    ],
+    "support_notes": "Full‑service—ideal when you need a crew to measure on‑site and deliver large tops."
+  },
+  {
+    "name": "Clear Image Glass",
+    "phone": "(425) 427‑5060",
+    "address": "1265 Front St S, Issaquah, WA 98027",
+    "website": "https://clearimageglass.com",
+    "contact_form_url": "https://clearimageglass.com/contact‑us",
+    "services": [
+      "Protective glass overlays for furniture",
+      "Wood‑window specialists",
+      "Uploads allow you to attach photos with the inquiry"
+    ],
+    "support_notes": "Lower prices if you’re willing to pick up at the Issaquah shop; detailed multi‑step request form."
   }
 ]

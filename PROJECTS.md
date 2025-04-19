@@ -18,3 +18,4 @@
 - [ ] Web UI to track responses
 - [ ] Auto-summarize incoming quotes
 - [ ] Upload photos
+- [ ] Overtime the vendors information gets updated with more specific 
