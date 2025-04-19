@@ -1,0 +1,94 @@
+[
+    {
+      "name": "Glass Doctor of Seattle",
+      "phone": "(206) 709-5004",
+      "address": "18840 72nd Ave S, Kent, WA 98032",
+      "website": "https://glassdoctor.com/seattle",
+      "contact_email": "info@glassdoctor.com",
+      "contact_form_url": "https://glassdoctor.com/seattle#schedule-appointment",
+      "required_fields": [
+        "First name",
+        "Last name",
+        "Phone",
+        "ZIP code",
+        "Service type",
+        "Job details"
+      ]
+    },
+    {
+      "name": "Beacon Hill Glass",
+      "phone": "(206) 372-4186",
+      "address": "231 SW 41st St, Renton, WA 98057",
+      "website": "https://www.beaconhillglass.com",
+      "contact_email": "info@beaconhillglass.com",
+      "contact_form_url": "https://www.beaconhillglass.com/quote-request",
+      "required_fields": [
+        "Service option",
+        "First name",
+        "Last name"
+      ],
+      "service_dropdown_options": [
+        "Single Pane Glass Repair",
+        "Double Pane Glass Replacement",
+        "New Window Installation",
+        "Window Issues / Repair",
+        "Other"
+      ]
+    },
+    {
+      "name": "Perkins Glass & Mirror",
+      "phone": "(206) 322-4949",
+      "address": "2737 1st Ave S, Seattle, WA 98134",
+      "website": "https://www.perkinsglassseattle.com",
+      "contact_email": "email@perkinsglassseattle.com",
+      "contact_form_url": "https://www.perkinsglassseattle.com/#contact",
+      "required_fields": [
+        "Name",
+        "Email",
+        "Phone",
+        "Message"
+      ]
+    },
+    {
+      "name": "Sunset Glass Co.",
+      "phone": "(425) 454-5087",
+      "address": "14320 NE 21st St #1, Bellevue, WA 98007",
+      "website": "https://sunsetglass.com",
+      "contact_email": "info@sunsetglass.com",
+      "contact_form_url": "https://sunsetglass.com/contact-us",
+      "required_fields": [
+        "First name",
+        "Last name",
+        "Phone number",
+        "Email",
+        "Message"
+      ]
+    },
+    {
+      "name": "Pacific Glass Inc.",
+      "phone": "(425) 277-1800",
+      "address": "221 Airport Way, Renton, WA 98057",
+      "website": "https://www.pacificglassinc.com",
+      "contact_email": "sales@pacificglassinc.com",
+      "contact_form_url": "https://www.pacificglassinc.com/contact",
+      "required_fields": [
+        "Name",
+        "Email",
+        "Service requested"
+      ]
+    },
+    {
+      "name": "Clear Image Glass",
+      "phone": "(425) 427-5060",
+      "address": "1265 Front St S, Issaquah, WA 98027",
+      "website": "https://clearimageglass.com",
+      "contact_email": "info@clearimageglass.com",
+      "contact_form_url": "https://clearimageglass.com/contact-us",
+      "required_fields": [
+        "Name",
+        "Email",
+        "City"
+      ]
+    }
+  ]
+  
