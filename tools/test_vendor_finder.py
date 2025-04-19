@@ -3,7 +3,7 @@
 Test script for vendor_finder.py
 
 This script demonstrates how to use the vendor_finder.py module to generate
-plumber vendor data for a specified city.
+plumber vendor data for a specified city using web search functionality.
 
 Usage:
     python test_vendor_finder.py [--city CITY] [--regenerate] [--count COUNT]
@@ -21,6 +21,7 @@ Examples:
 
 import os
 import json
+# Import from the local module
 from vendor_finder import get_mock_vendors, generate_plumber_vendors, save_vendors_to_json
 
 def test_vendor_generation(city="Seattle", regenerate=False, count=5):
@@ -73,12 +74,19 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    # Make sure the .env file is loaded
+    # Make sure the .env file is loaded with required API keys
+    missing_keys = []
     if not os.getenv("OPENROUTER_API_KEY"):
-        print("\nWARNING: OPENROUTER_API_KEY not found in environment variables.")
+        missing_keys.append("OPENROUTER_API_KEY")
+    if not os.getenv("OPENAI_API_KEY"):
+        missing_keys.append("OPENAI_API_KEY")
+    
+    if missing_keys:
+        print(f"\nWARNING: The following API keys were not found in environment variables: {', '.join(missing_keys)}")
         print("Make sure you have a .env file with the required API keys.")
         print("Example .env file content:")
         print("OPENROUTER_API_KEY=your_openrouter_api_key_here")
+        print("OPENAI_API_KEY=your_openai_api_key_here  # Required for web search functionality")
     
     # Run the test
     test_vendor_generation(args.city, args.regenerate, args.count)

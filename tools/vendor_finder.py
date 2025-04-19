@@ -1,5 +1,5 @@
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
 import json
 import os
 from dotenv import load_dotenv
@@ -7,8 +7,10 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Configure LangChain to use OpenRouter
-llm = ChatOpenAI()
+# Configure LangChain with web search capability
+llm = ChatOpenAI(model="gpt-4o-mini")
+tool = {"type": "web_search_preview"}
+llm_with_tools = llm.bind_tools([tool])
 
 def generate_plumber_vendors(city: str, count: int = 5) -> list:
     """Generate plumber vendor data using LangChain and OpenRouter"""
@@ -23,6 +25,7 @@ def generate_plumber_vendors(city: str, count: int = 5) -> list:
       "name": "",
       "phone": "",
       "address": "",
+      "email": "",
       "website": "",
       "contact_form_url": "",
       "services": [],
@@ -31,7 +34,11 @@ def generate_plumber_vendors(city: str, count: int = 5) -> list:
     
     Combine them into a JSON array—no extra text before or after.
     
-    Use web browsing to verify phone numbers and contact‑/quote‑form URLs.
+    USE THE WEB_SEARCH TOOL to find and verify information about plumbers in {city}. Specifically:
+    1. Search for plumbing companies in {city}
+    2. Verify each company's phone number, website, and contact form URL
+    3. Confirm their service area includes {city}
+    4. Find their physical address and services offered
     
     Prefer companies within 30 miles of downtown {city}; if you must include one farther away, note the distance in support_notes.
     
@@ -41,18 +48,55 @@ def generate_plumber_vendors(city: str, count: int = 5) -> list:
     """
     
     prompt = PromptTemplate.from_template(template)
-    response = llm.invoke(prompt.format(city=city, count=count))
+    response = llm_with_tools.invoke(prompt.format(city=city, count=count))
     
     # Extract the response content
-    response_text = response.content
+    # When using tools like web_search, the response structure might be different
+    if hasattr(response, 'content'):
+        response_text = response.content
+    else:
+        # Handle different response structures that might come from tool use
+        print("Response format differs from expected. Attempting to extract content...")
+        if hasattr(response, 'message') and hasattr(response.message, 'content'):
+            response_text = response.message.content
+        elif isinstance(response, dict) and 'content' in response:
+            response_text = response['content']
+        elif isinstance(response, str):
+            response_text = response
+        else:
+            print(f"Unexpected response format: {type(response)}")
+            print(f"Response: {response}")
+            return []
     
     try:
-        # Try to parse the response as JSON
+        # If response_text is already a list or dict, return it directly
+        if isinstance(response_text, (list, dict)):
+            return response_text
+        # Try to parse the response as JSON string
         vendors = json.loads(response_text)
         return vendors
     except json.JSONDecodeError:
-        # If parsing fails, log the error and return an empty list
-        print(f"Error parsing JSON response: {response_text}")
+        # Try to extract JSON array from the response text
+        import re
+        print(f"Error parsing JSON response, attempting to extract JSON array: {response_text}")
+        try:
+            # Find the first '[' and last ']' to extract the JSON array
+            start = response_text.find('[')
+            end = response_text.rfind(']')
+            if start != -1 and end != -1 and end > start:
+                json_str = response_text[start:end+1]
+                vendors = json.loads(json_str)
+                return vendors
+            else:
+                # Try to extract with regex as a fallback
+                match = re.search(r'\[.*\]', response_text, re.DOTALL)
+                if match:
+                    vendors = json.loads(match.group(0))
+                    return vendors
+        except Exception as e:
+            print(f"Failed to extract JSON array: {e}")
+        # If all parsing fails, return an empty list
+        print(f"Final failure parsing JSON response: {response_text}")
         return []
 
 def save_vendors_to_json(vendors: list, filename: str = "data/plumber_vendors.json") -> None:
