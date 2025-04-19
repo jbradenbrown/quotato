@@ -1,1 +1,3 @@
 data/vendors_test.json
+.env
+__pycache__
