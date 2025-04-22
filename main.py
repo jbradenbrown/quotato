@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SERVICE = "window replacement"
+SERVICE = "plumb"
 CITY = "Seattle"
 DETAILS = "We have two cracked windows in a single-family home."
 USER_NAME = "Jeffrey Brown"
@@ -25,7 +25,7 @@ def main():
     queue = JobQueue()
     
     # Find vendors
-    vendors = get_mock_vendors(SERVICE, CITY)
+    vendors = get_mock_vendors(SERVICE, CITY)[:2]
     print(f"Found {len(vendors)} vendors")
     
     # Create jobs for each vendor
@@ -52,19 +52,10 @@ def main():
         queue.add_job(job)
         process_initial_contact(job)
     
-    # Simulation loop
-    max_iterations = 10
-    for iteration in range(max_iterations):
-        print(f"\n--- Iteration {iteration + 1} ---")
-        
-        # Check for replies
+    while len(queue.active_jobs) != len(queue.get_jobs_by_state(JobState.COMPLETED)) + len(queue.get_jobs_by_state(JobState.FAILED)):
         check_for_replies(queue)
-        
-        # Print current status
         print_job_status(queue)
-        
-        # Small delay between iterations
-        time.sleep(1)
+        print(queue.get_status_counts())
     
     # Generate final report
     generate_final_report(queue, vendors)
@@ -72,12 +63,12 @@ def main():
 def process_initial_contact(job):
     """Send initial contact to vendor"""
     job.update_state(JobState.RUNNING, "Initiating contact")
-    
-    try:
-        if job.contact_info["type"] == "email":
-            # Prepare and send email
-            body = generate_quote_email(job.service, job.details, CITY)
-            send_email(
+
+    # Assume everyone has an email, no forms yet
+
+    body = generate_quote_email(job.service, job.details, CITY, job.vendor_name)
+
+    send_email(
                 to_email=job.contact_info["email"],
                 subject=f"Quote request: {job.service} in {CITY}",
                 body=body,
@@ -85,20 +76,8 @@ def process_initial_contact(job):
                 smtp_user=os.getenv("SMTP_USER"),
                 smtp_pass=os.getenv("SMTP_PASS")
             )
-            job.update_state(JobState.WAITING, "Email sent, awaiting reply")
-        
-        elif job.contact_info["type"] == "form":
-            # Prepare form submission
-            form_content = generate_form_submission(
-                job.service, CITY, job.details, USER_NAME, USER_EMAIL
-            )
-            job.update_state(JobState.WAITING, "Form submission prepared")
-        
-        else:
-            job.mark_failed("No contact method available")
     
-    except Exception as e:
-        job.mark_failed(f"Contact initiation failed: {str(e)}")
+    job.update_state(JobState.WAITING, "Email sent, awaiting reply")
 
 def print_job_status(queue):
     """Print detailed status of all jobs"""
